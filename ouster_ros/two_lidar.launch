@@ -13,12 +13,16 @@ The published topcs in ths case:
     /right/os1_node/lidar_packets
 -->
 <launch>
+    <!-- assuming the two lidars are 1.16 m apart from each other -->
+    <node pkg="tf" type="static_transform_publisher" name="two_ousters" args="0.0 1.16 0.0 0.0 0.0 0.0 left/os1_lidar right/os1_lidar 100" />
+    
     <group ns="left">
             <include file="$(find ouster_ros)/os1.launch" >
                 <arg name="os1_hostname" value="192.168.1.204"/>
                 <arg name="os1_udp_dest" value="192.168.1.100"/>
                 <arg name="os1_lidar_port" default="7502" doc="port to which the sensor should send lidar data"/>
                 <arg name="os1_imu_port" default="7503" doc="port to which the sensor should send imu data"/>
+                <arg name="tf_prefix" default="left"/>
             </include>
     </group>
     <group ns="right">
@@ -27,6 +31,7 @@ The published topcs in ths case:
                 <arg name="os1_udp_dest" value="192.168.1.100"/>
                 <arg name="os1_lidar_port" default="7504" doc="port to which the sensor should send lidar data"/>
                 <arg name="os1_imu_port" default="7505" doc="port to which the sensor should send imu data"/>
+                <arg name="tf_prefix" default="right"/>
             </include>
     </group>
 </launch>
