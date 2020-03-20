@@ -70,6 +70,9 @@ int main(int argc, char** argv) {
         imu_pub.publish(ouster_ros::OS1::packet_to_imu_msg(p, imu_frame));
     };
 
+    std::string ns = ros::this_node::getNamespace();
+    ROS_INFO_STREAM(ns);
+
     auto lidar_packet_sub = nh.subscribe<PacketMsg, const PacketMsg&>(
         "lidar_packets", 2048, lidar_handler);
     auto imu_packet_sub = nh.subscribe<PacketMsg, const PacketMsg&>(
