@@ -11,6 +11,7 @@
   <arg name="viz" default="false" doc="whether to run a simple visualizer"/>
   <arg name="image" default="false" doc="publish range/intensity/noise image topic"/>
   <arg name="tf_prefix" default="" doc="namespace for tf transforms"/>
+  <arg name="publish_transforms" default="false" doc="publish (broadcast) transforms tf"/>
 
   <node pkg="ouster_ros" name="os1_node" type="os1_node" output="screen" required="true">
     <param name="~/lidar_mode" type="string" value="$(arg lidar_mode)"/>

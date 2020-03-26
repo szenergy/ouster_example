@@ -81,14 +81,16 @@ int main(int argc, char** argv) {
         "imu_packets", 100, imu_handler);
 
     // publish transforms
-    tf2_ros::StaticTransformBroadcaster tf_bcast{};
+    auto pub_tf = nh.param("publish_transforms", true);
+    if(pub_tf){
+        tf2_ros::StaticTransformBroadcaster tf_bcast{};
 
-    tf_bcast.sendTransform(ouster_ros::OS1::transform_to_tf_msg(
-        cfg.response.imu_to_sensor_transform, sensor_frame, imu_frame));
+        tf_bcast.sendTransform(ouster_ros::OS1::transform_to_tf_msg(
+            cfg.response.imu_to_sensor_transform, sensor_frame, imu_frame));
 
-    tf_bcast.sendTransform(ouster_ros::OS1::transform_to_tf_msg(
-        cfg.response.lidar_to_sensor_transform, sensor_frame, lidar_frame));
-
+        tf_bcast.sendTransform(ouster_ros::OS1::transform_to_tf_msg(
+            cfg.response.lidar_to_sensor_transform, sensor_frame, lidar_frame));
+    }
     ros::spin();
 
     return EXIT_SUCCESS;
