@@ -36,6 +36,7 @@ sensor_msgs::Imu packet_to_imu_msg(const PacketMsg& p, const std::string& frame,
     const uint8_t* buf = p.buf.data();
 
     m.header.stamp.fromNSec(pf.imu_gyro_ts(buf));
+    m.header.stamp = ros::Time::now(); // this is simalar to timestamp_mode TIME_FROM_ROS_RECEPTION 
     m.header.frame_id = frame;
 
     m.orientation.x = 0;
@@ -94,6 +95,7 @@ sensor_msgs::PointCloud2 cloud_to_cloud_msg(const Cloud& cloud, ns timestamp,
     pcl::toROSMsg(cloud, msg);
     msg.header.frame_id = frame;
     msg.header.stamp.fromNSec(timestamp.count());
+    msg.header.stamp = ros::Time::now(); // this is simalar to timestamp_mode TIME_FROM_ROS_RECEPTION 
     return msg;
 }
 
